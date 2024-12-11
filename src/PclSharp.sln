@@ -7,6 +7,10 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PclSharp", "PclSharp\PclSha
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTest", "UnitTest\UnitTest.csproj", "{2825DD70-BD7B-4088-9E4C-DE29D8E64176}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTestUI", "UnitTestUI\UnitTestUI.csproj", "{5000D88A-2AEC-45F4-8A5B-27E722FDF193}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Util", "Util\Util.csproj", "{3139282F-3296-4D35-8128-6641296A2877}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -21,6 +25,12 @@ Global
 		{2825DD70-BD7B-4088-9E4C-DE29D8E64176}.Debug|x64.Build.0 = Debug|x64
 		{2825DD70-BD7B-4088-9E4C-DE29D8E64176}.Release|x64.ActiveCfg = Release|x64
 		{2825DD70-BD7B-4088-9E4C-DE29D8E64176}.Release|x64.Build.0 = Release|x64
+		{5000D88A-2AEC-45F4-8A5B-27E722FDF193}.Debug|x64.ActiveCfg = Debug|x64
+		{5000D88A-2AEC-45F4-8A5B-27E722FDF193}.Debug|x64.Build.0 = Debug|x64
+		{5000D88A-2AEC-45F4-8A5B-27E722FDF193}.Release|x64.ActiveCfg = Release|x64
+		{3139282F-3296-4D35-8128-6641296A2877}.Debug|x64.ActiveCfg = Debug|x64
+		{3139282F-3296-4D35-8128-6641296A2877}.Debug|x64.Build.0 = Debug|x64
+		{3139282F-3296-4D35-8128-6641296A2877}.Release|x64.ActiveCfg = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

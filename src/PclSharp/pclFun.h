@@ -51,6 +51,8 @@ extern "C" EXPORT(float*)  RadiusDownSamplingRun(const float* array, int rows,in
 
 extern "C" EXPORT(float*)  StatisticalOutlierFilter(const float* array, int rows,int meanK, float stddevMulThresh,int* resultRow);
 
+extern "C" EXPORT(void)  FitCircle(const float* array, int rows,float* diameter);
+
 extern "C" inline __declspec(dllexport) void FreeArray(const float* array) {
 	delete[] array;
 }
