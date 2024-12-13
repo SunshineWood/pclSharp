@@ -10,6 +10,22 @@
     Height="450"
     mc:Ignorable="d">
     <Grid>
-        <Button Click="ButtonBase_OnClick" Content="拟合圆" />
+        <StackPanel>
+            <Button
+                Height="35"
+                Margin="3"
+                Click="ButtonBase_OnClick"
+                Content="拟合圆" />
+            <Button
+                Height="35"
+                Margin="3"
+                Click="StatisticalFilter_OnClick"
+                Content="统计滤波" />
+            <Button
+                Height="35"
+                Margin="3"
+                Click="SmoothFilter_OnClick"
+                Content="平滑滤波" />
+        </StackPanel>
     </Grid>
 </Window>

@@ -26,10 +26,21 @@ namespace UnitTestUI
             InitializeComponent();
         }
 
+        private UnitTest1 test1= new UnitTest1();
+
         private void ButtonBase_OnClick(object sender, RoutedEventArgs e)
         {
-            UnitTest1 test1= new UnitTest1();
-            test1.FitCircle();
+            test1.FitCircleTest();
+        }
+
+        private void StatisticalFilter_OnClick(object sender, RoutedEventArgs e)
+        {
+            test1.StatisticalOutlierFilterTest();
+        }
+
+        private void SmoothFilter_OnClick(object sender, RoutedEventArgs e)
+        {
+            test1.SmoothFilterTest();
         }
     }
 }

@@ -1,77 +1,15 @@
 ﻿#include "pch.h"
-#include <iostream>
+#include "yzsfit.h"
 #include <vector>
 #include <pcl/point_cloud.h>
-#include "pclFun.h"
 #include <pcl/common/distances.h>
-#include <pcl/registration/icp.h>
 #include <pcl/segmentation/sac_segmentation.h>
+#include "Helper.h"
 
-float* RadiusDownSamplingRun(const float* arrayF1, int rows, int* resultRow)
+void fit_circle(const float* array, const int rows, float* diameter)
 {
-	pcl::PointCloud<pcl::PointXYZ>::Ptr cloud(new pcl::PointCloud<pcl::PointXYZ>);
-	cloud->resize(rows);
-	for (int i = 0; i < rows; ++i)
-	{
-		cloud->points[i].x = arrayF1[i * 3 + 0];
-		cloud->points[i].y = arrayF1[i * 3 + 1];
-		cloud->points[i].z = arrayF1[i * 3 + 2];
-	}
-	YzsFilters<pcl::PointXYZ> rd;
-	const pcl::PointCloud<pcl::PointXYZ>::Ptr out_cloud = rd.filter(cloud);
-	float* floatArray = new float[out_cloud->points.size() * 3];
-	for (size_t i = 0; i < out_cloud->points.size(); ++i)
-	{
-		floatArray[i * 3 + 0] = out_cloud->points[i].x;
-		floatArray[i * 3 + 1] = out_cloud->points[i].y;
-		floatArray[i * 3 + 2] = out_cloud->points[i].z;
-	}
-	*resultRow = out_cloud->points.size();
-	return floatArray;
-}
-
-float* StatisticalOutlierFilter(const float* array, int rows, int meanK, float stddevMulThresh, int* resultRow)
-{
-	pcl::PointCloud<pcl::PointXYZ>::Ptr cloud(new pcl::PointCloud<pcl::PointXYZ>);
-	cloud->resize(rows);
-	for (int i = 0; i < rows; ++i)
-	{
-		cloud->points[i].x = array[i * 3 + 0];
-		cloud->points[i].y = array[i * 3 + 1];
-		cloud->points[i].z = array[i * 3 + 2];
-	}
-	YzsFilters<pcl::PointXYZ> rd;
-	const pcl::PointCloud<pcl::PointXYZ>::Ptr out_cloud = rd.statistical_filter(cloud, meanK, stddevMulThresh);
-	float* floatArray = new float[out_cloud->points.size() * 3];
-	for (size_t i = 0; i < out_cloud->points.size(); ++i)
-	{
-		floatArray[i * 3 + 0] = out_cloud->points[i].x;
-		floatArray[i * 3 + 1] = out_cloud->points[i].y;
-		floatArray[i * 3 + 2] = out_cloud->points[i].z;
-	}
-	*resultRow = out_cloud->points.size();
-	return floatArray;
-}
-
-struct CircleFitResult
-{
-	double diameter;
-	double center_x;
-	double center_y;
-	double average_error;
-	int inlier_count;
-};
-
-void FitCircle(const float* array, int rows, float* outputDiameter)
-{
-	pcl::PointCloud<pcl::PointXYZ>::Ptr cloud(new pcl::PointCloud<pcl::PointXYZ>);
-	cloud->resize(rows);
-	for (int i = 0; i < rows; ++i)
-	{
-		cloud->points[i].x = array[i * 2 + 0];
-		cloud->points[i].y = array[i * 2 + 1];
-		cloud->points[i].z = 0;
-	}
+	pcl::PointCloud<pcl::PointXYZ>::Ptr cloud;
+	Helper::Create2DPointCloudFromArray<pcl::PointXYZ>(array, rows, cloud);
 
 	CircleFitResult result;
 	result.diameter = 9.480;
@@ -160,5 +98,5 @@ void FitCircle(const float* array, int rows, float* outputDiameter)
 		std::pow(center.x() - min_x_point.x, 2) +
 		std::pow(center.y() - min_x_point.y, 2)
 	);
-	*outputDiameter = distance_to_min_x*2;
+	*diameter = distance_to_min_x*2;
 }
