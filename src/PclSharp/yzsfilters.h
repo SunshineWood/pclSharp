@@ -12,11 +12,11 @@
 #include <pcl/surface/mls.h>
 
 
-extern "C" EXPORT(float*) radius_down_sampling_run(const float* arrayF1, int rows, int* resultRow);
+extern "C" EXPORT(float*) radius_down_sampling_run(const float* arrayF1, int rows, size_t* resultRow);
 
-extern "C" EXPORT(float*)  statistical_outlier_filter(const float* array, int rows,int meanK, float stddevMulThresh,int* resultRow);
+extern "C" EXPORT(float*)  statistical_outlier_filter(const float* array, int rows,int meanK, float stddevMulThresh,size_t* resultRow);
 
-extern "C" EXPORT(float*)  smooth_filter(const float* array, int rows,int polynomialOrder,float searchRadius,int* resultRow);
+extern "C" EXPORT(float*)  smooth_filter(const float* array, int rows,int polynomialOrder,float searchRadius,size_t* resultRow);
 
 extern "C" inline __declspec(dllexport) void FreeArray(const float* array) {
 	delete[] array;

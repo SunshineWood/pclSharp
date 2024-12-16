@@ -1,6 +1,8 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Threading;
 using Util;
 
@@ -45,13 +47,20 @@ namespace UnitTest
         [TestMethod]
         public void StatisticalOutlierFilterTest()
         {
-            var ps3D = FileHelper.LoadFileData("Test.txt");
-            float[] cloudInput = new float[ps3D.Count * 3];
-            for (int i = 0; i < ps3D.Count; i++)
+            string folderPath = AppDomain.CurrentDomain.BaseDirectory + "\\TestData\\";
+            string[] plyFiles = Directory.GetFiles(folderPath, "*.ply");
+            List<Point3D> allPoints = new List<Point3D>();
+            foreach (string file in plyFiles)
             {
-                cloudInput[i * 3 + 0] = (float)ps3D[i].X;
-                cloudInput[i * 3 + 1] = (float)ps3D[i].Y;
-                cloudInput[i * 3 + 2] = (float)ps3D[i].Z;
+                var ps3D = FileHelper.LoadFileData(file);
+                allPoints.AddRange(ps3D);
+            }
+            float[] cloudInput = new float[allPoints.Count * 3];
+            for (int i = 0; i < allPoints.Count; i++)
+            {
+                cloudInput[i * 3 + 0] = (float)allPoints[i].X;
+                cloudInput[i * 3 + 1] = (float)allPoints[i].Y;
+                cloudInput[i * 3 + 2] = (float)allPoints[i].Z;
             }
             var x=PclSharp.StatisticalOutlierFilter(cloudInput, 80,0.6f,out var size);
         }
