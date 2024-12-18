@@ -99,6 +99,12 @@
       <EnableEnhancedInstructionSet>AdvancedVectorExtensions2</EnableEnhancedInstructionSet>
       <CompileAs>CompileAsCpp</CompileAs>
       <DebugInformationFormat>None</DebugInformationFormat>
+<<<<<<< HEAD
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+=======
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+>>>>>>> 89bfe84b9e407b71d2bc36fb4803c2a27250f8c6
+      <Optimization>MaxSpeed</Optimization>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <Optimization>MaxSpeed</Optimization>
     </ClCompile>
