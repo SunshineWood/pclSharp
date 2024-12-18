@@ -15,7 +15,7 @@ namespace UnitTest
         public void FitCircleTest()
         {
             string executionPath = AppDomain.CurrentDomain.BaseDirectory;
-            var files = Directory.GetFiles(executionPath, "*-*.txt");
+            var files = Directory.GetFiles(executionPath, "*.txt");
             foreach (var file in files)
             {
                 var ps3D = FileHelper.LoadFileData(file);
