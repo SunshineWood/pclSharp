@@ -24,7 +24,7 @@ void fit_circle(const float* array, const int rows, float* diameter)
 	centroid /= cloud->points.size();
 
 	// 迭代优化圆心位置
-	const int max_iterations = 1000;
+	const int max_iterations = 1500;
 	const double convergence_threshold = 1e-4;
 
 	Eigen::Vector2d center = centroid;
@@ -58,11 +58,6 @@ void fit_circle(const float* array, const int rows, float* diameter)
 			break;
 		}
 	}
-
-	// 计算最终结果
-	result.center_x = center.x();
-	result.center_y = center.y();
-
 	// 计算拟合误差
 	double total_error = 0;
 	int inlier_count = 0;
@@ -81,22 +76,34 @@ void fit_circle(const float* array, const int rows, float* diameter)
 			inlier_count++;
 		}
 	}
-
-	result.average_error = total_error / cloud->points.size();
-	result.inlier_count = inlier_count;
-	pcl::PointXYZ min_x_point = cloud->points[0];
-	for (const auto& point : cloud->points)
+	
+	// 找到X最小的点的索引
+	int min_x_index = 0;
+	for (int i = 0; i < cloud->points.size(); i++)
 	{
-		if (point.x < min_x_point.x)
+		if (cloud->points[i].x < cloud->points[min_x_index].x)
 		{
-			min_x_point = point;
+			min_x_index = i;
 		}
 	}
 
-	// Calculate the distance between center and the point with minimum X
-	double distance_to_min_x = std::sqrt(
-		std::pow(center.x() - min_x_point.x, 2) +
-		std::pow(center.y() - min_x_point.y, 2)
-	);
-	*diameter = distance_to_min_x*2;
+	// 计算X最小点及其附近两个点到center的距离平均值
+	double total_distance = 0.0;
+	int count = 0;
+
+	// 考虑边界情况，确保不会访问越界
+	for (int i = std::max(0, min_x_index - 1); 
+		 i <= std::min(static_cast<int>(cloud->points.size()) - 1, min_x_index + 1); 
+		 i++)
+	{
+		double current_distance = std::sqrt(
+			std::pow(center.x() - cloud->points[i].x, 2) +
+			std::pow(center.y() - cloud->points[i].y, 2)
+		);
+		total_distance += current_distance;
+		count++;
+	}
+	// 计算平均距离
+	double distance = total_distance / count;
+	*diameter = distance*2;
 }

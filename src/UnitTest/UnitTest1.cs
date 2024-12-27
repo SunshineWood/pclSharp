@@ -2,8 +2,6 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Threading;
 using Util;
 
 namespace UnitTest
@@ -26,7 +24,7 @@ namespace UnitTest
                     cloudInput[i * 2 + 1] = (float)ps3D[i].Y;
                 }
                 PclSharp.FitCircle(cloudInput, out float diameter);
-                Console.WriteLine($"File: {Path.GetFileName(file)}, Diameter: {diameter}");
+                Console.WriteLine($"File: {Path.GetFileName(file)}, Diameter: {diameter:F3}");
             }
         }
 
